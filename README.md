@@ -2,6 +2,14 @@
 
 This project provides a tool which allows users collect current radon data from FTLab Radon Eye RD200 v1 and V2 (2022+) (Bluetooth only versions). 
 
+Example Grafana - Prometheus Integration
+
+<img width="464" height="186" alt="image" src="https://github.com/user-attachments/assets/ef659636-f306-4b6c-bf20-4a13a9bb8fee" />
+
+Kantmn v0.4.1 - 27/03/2025
+- Forked Project
+- Added prometheus exporter
+  
 EtoTen v0.4 - 07/05/2022
 - Forked Project
 - Changed compatability to Python3 
@@ -15,10 +23,18 @@ Note: if specifying an (-a) MAC address, you now also have to specify a device t
 
 <pre><code>sudo apt install libglib2.0-dev
 pip3 install bluepy
-pip3 install paho-mqtt
+pip3 install paho-mqtt (optional)
 sudo setcap cap_net_raw+e /home/pi/.local/lib/python3.7/site-packages/bluepy/bluepy-helper
 sudo setcap cap_net_admin+eip /home/pi/.local/lib/python3.7/site-packages/bluepy/bluepy-helper
 </pre></code>
+
+# Prometheus Data Source Exporter:
+- Use python to run the script on a device in range of one or multiple sensors
+python script.py --radon-sensors AA:BB:CC:DD:EE:FF:Sensor1 11:22:33:44:55:66:Sensor2 ...
+
+AA:BB:CC:DD:EE:FF = macAdress
+Sensor1 = The Label to be used in Prometheus, dont use SPACES
+
 
 # Home assistant integration via MQTT:
 
@@ -46,14 +62,16 @@ mqtt:
 
 # Hardware Requirements
 - FTLabs RadonEye RD200 v1 or v2
-- Raspberry Pi w/Bluetooth LE (Low Energy) support (RPi 3B/4/etc...)
+- Raspberry Pi w/Bluetooth LE (Low Energy) support (RPi 3B/4/Zero/etc...)
 
 # Software Requirements
 - Python 3.7
 - bluepy Python library
-- paho-mqtt Python library
+- paho-mqtt Python library (only for MQTT / HA)
+- prometheus server
 
 # History
+- 0.4.1 - Forked and added prometheus exporter
 - 0.4 - Forked and modified extensively 
 - 0.3 - Added MQTT support
 
